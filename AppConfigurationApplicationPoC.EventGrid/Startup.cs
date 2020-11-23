@@ -20,8 +20,7 @@ namespace AppConfigurationApplicationPoC.EventGrid
             var configurationBuilder = new ConfigurationBuilder()
                 .AddAzureAppConfiguration(options =>
                 {
-                    options.Connect(Environment.GetEnvironmentVariable("AppConfigConnectionString"))
-                        .UseFeatureFlags();
+                    options.Connect(Environment.GetEnvironmentVariable("AppConfigConnectionString"));
                     options.Select(KeyFilter.Any, "All");
 
                     ConfigurationRefresher = options.GetRefresher();
