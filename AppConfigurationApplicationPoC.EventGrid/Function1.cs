@@ -27,6 +27,10 @@ namespace AppConfigurationApplicationPoC.EventGrid
         public async Task Run([EventGridTrigger]EventGridEvent eventGridEvent)
         {
             Console.WriteLine($"Before refresh: {_configuration["somekey"]}");
+
+            // Invalidate cached key-values before calling TryRefreshAsync
+            _configurationRefresher.SetDirty();
+
             var refreshed = await _configurationRefresher.TryRefreshAsync();
             Console.WriteLine($"Refreshed: {refreshed}");
             Console.WriteLine($"After refresh: {_configuration["somekey"]}");

@@ -22,6 +22,10 @@ namespace AppConfigurationApplicationPoC.EventGrid
                 {
                     options.Connect(Environment.GetEnvironmentVariable("AppConfigConnectionString"));
                     options.Select(KeyFilter.Any, "All");
+                    options.ConfigureRefresh(refreshOptions =>
+                            refreshOptions.Register("somekey")
+                                          .SetCacheExpiration(TimeSpan.FromDays(30)) // Note: Reduce frequency of the native pull refresh functionality
+                        );
 
                     ConfigurationRefresher = options.GetRefresher();
                 });
