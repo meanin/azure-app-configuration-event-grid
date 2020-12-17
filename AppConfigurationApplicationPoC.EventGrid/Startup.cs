@@ -21,9 +21,9 @@ namespace AppConfigurationApplicationPoC.EventGrid
                 .AddAzureAppConfiguration(options =>
                 {
                     options.Connect(Environment.GetEnvironmentVariable("AppConfigConnectionString"));
-                    options.Select(KeyFilter.Any, "All");
+                    options.Select("appsection:*");
                     options.ConfigureRefresh(refreshOptions =>
-                            refreshOptions.Register("somekey")
+                            refreshOptions.Register("appsection:sentinel")
                                           .SetCacheExpiration(TimeSpan.FromDays(30)) // Note: Reduce frequency of the native pull refresh functionality
                         );
 
